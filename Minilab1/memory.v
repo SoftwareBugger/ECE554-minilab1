@@ -1,5 +1,5 @@
 // Verilog module for BRAM with partial Avalon memory-mapped read interface (stores 8x8 matrix)
-module mem_wrapper (
+module memory (
     input wire clk,
     input wire reset_n,
     
