@@ -10,14 +10,14 @@ module fifo_filler
     output logic[7:0] data_o
 );
 
-logic [63:0] readdata;
+logic [63:0] readdata, shiftdata;
 logic read;
 logic datavalid, waitrequest;
 
-typedef enum reg[1:0]{IDLE, MEM_READ, FILL_FIFO}state_t;
+typedef enum reg[1:0]{IDLE, MEM_READ, PUSH_BYTE, EVALUATE}state_t;
 state_t state, nxt_state;
 
-memory MEM(.clk(clk), .reset_n(rst_n), .address(address), .read(read), .readdata(readdata), .readdatavalid(datavalid), .waitrequest(waitrequest));
+mem_wrapper MEM(.clk(clk), .reset_n(rst_n), .address(address), .read(read), .readdata(readdata), .readdatavalid(datavalid), .waitrequest(waitrequest));
 
 
 always_ff@(posedge clk, negedge rst_n)begin
@@ -27,6 +27,8 @@ always_ff@(posedge clk, negedge rst_n)begin
     state <= nxt_state;
 end
 
+
+
 always_comb begin
   nxt_state = state;
   wren = 0;
@@ -35,22 +37,28 @@ always_comb begin
   read = 0;
   
   case(state)
-	FILL_FIFO:begin
-		if(fifo_full)begin
-            done = 1'b1;
-            nxt_state = IDLE;
-        end
-        else begin
-            data_o = readdata[7:0];
-            readdata = {8'h00, readdata[35:8]};
-        end
-		
+	PUSH_BYTE:begin
+            data_o = shiftdata[7:0];
+            shiftdata = {8'h00, shiftdata[63:8]};
+	    wren = 1'b1;
+	    nxt_state = EVALUATE;
 	end
 	
+	EVALUATE:begin
+	if(fifo_full)begin
+            done = 1'b1;
+            nxt_state = IDLE;
+            end
+	else
+	  nxt_state = PUSH_BYTE;
+	end
+
 	MEM_READ:begin
+		if(datavalid)begin
+			shiftdata = readdata;
+			nxt_state = PUSH_BYTE;
+		end
 		read = 1'b1;
-		if(datavalid & ~waitrequest)
-			nxt_state = FILL_FIFO;
 	end
   
     ////////default -> IDLE///////
