@@ -37,7 +37,7 @@ module fifo_tb();
         rden = 0;
         wren = 1;
         @(negedge clk) rst_n = 0;
-	@(negedge clk);
+	    @(negedge clk);
         for (int i = 0; i < DEPTH; i++) begin
             @(negedge clk) begin
                 rst_n = 1;
