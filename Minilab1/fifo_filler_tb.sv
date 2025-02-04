@@ -21,6 +21,11 @@ logic fifo_wren[9];
 logic fifo_rden[9];
 logic fifo_full[9];
 
+//Expected values
+logic [63:0] expected[8:0] = {64'h8182838485868788, 64'h7172737475767778, 64'h6162636465666768,
+	64'h5152535455565758, 64'h4142434445464748, 64'h3132333435363738, 64'h2122232425262728,
+	64'h1112131415161718, 64'h0102030405060708};
+
 //Generate FIFOs
 genvar i;
 generate
@@ -72,9 +77,6 @@ initial begin
   repeat(2)@(posedge clk);
   $display("Starting FIFO Filling");
   for(int i = 0; i < 9; i++)begin
-    //set interconnects to correct FIFO and set address
-    // fifo_wren[i] = wren;
-    // fifo_data_in[i] = data_o;
     address = i;
     cnt = i;
 
@@ -104,9 +106,6 @@ initial begin
   //Check FIFO outputs
   $display("Done Filling FIFOs, Beginning Contents Check");
   for(int i = 0; i < 9; i++)begin
-    //set interconnect
-    // fifo_rden[i] = rden;
-    // fifo_byte = fifo_data_out[i];
     cnt = i;
 
     //get FIFO content
@@ -115,8 +114,18 @@ initial begin
       fifo_data = {fifo_byte, fifo_data[63:8]};
     rden = 1'b0;
 
+
+    $display("FIFO %d expected contents:%h", i, expected[i]);
     $display("FIFO %d contents:%h", i, fifo_data);
+    if(fifo_data === expected[i])begin
+	$display("TEST %d PASSED", i);
+	end
+    else begin
+	$display("TEST %d FAILED", i);
+	$stop;
+    end
   end
+  $display("YAHOO: FIFO's filled correctly");
   $stop();
 end
 
