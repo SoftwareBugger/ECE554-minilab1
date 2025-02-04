@@ -28,13 +28,15 @@ module top(
     logic filler_write;
     logic[31:0] address;
     logic start_filler;
+    logic filler_en;
+    logic [3:0] cnt;
 
     fifo_filler filler
     (
         .clk(clk),
         .rst_n(rst_n),
-        .start(start_filler),
-        .fifo_full(full),
+        .start(filler_en),
+        .fifo_full(full[cnt]),
         .address(address),
         .wren(filler_write),
         .done(filler_done),
@@ -79,7 +81,7 @@ module top(
     end
 
     
-    logic [3:0] cnt;
+    
     logic clr_cnt;
     logic inc_cnt;
 
@@ -97,6 +99,12 @@ module top(
         else if (inc_cnt) begin
             cnt <= cnt + 1;
         end
+    end
+
+    
+    always_ff @(negedge rst_n, posedge clk) begin
+        if (!rst_n) filler_en <= 0;
+        else filler_en <= start_filler;
     end
 
     always_comb begin

@@ -4,7 +4,7 @@ module top_tb();
 
 logic clk, rst_n, start, done, Clr;
 
-logic [24:0] C [8];
+logic [23:0] C [7:0];
 logic [3:0] cnt;
 //Expected values
 logic [16:0] expected[7:0] = {16'h12cc, 16'h108c, 16'h0e4c, 16'h0c0c, 16'h09cc, 16'h078c, 16'h054C, 16'h030c};
@@ -51,7 +51,7 @@ initial begin
 
     $display("MAC %d expected contents:%h", i, expected[i]);
     $display("MAC %d contents:%h", i, C[i]);
-    if(C[i] === expected[i])begin
+    if(C[i] == expected[i])begin
 	$display("TEST %d PASSED", i);
 	end
     else begin
