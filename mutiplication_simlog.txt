@@ -1,0 +1,26 @@
+vsim -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/220model -vopt -voptargs=+acc work.multiplication_tb
+# End time: 17:13:39 on Feb 05,2025, Elapsed time: 0:01:21
+# Errors: 0, Warnings: 3
+# vsim -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/220model -vopt -voptargs="+acc" work.multiplication_tb 
+# Start time: 17:13:39 on Feb 05,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.multiplication_tb(fast)
+# Loading work.Multiplication(fast)
+# Loading work.FIFO(fast)
+# Loading work.Multi_single(fast)
+# Loading work.MAC(fast)
+run -all
+# C[          0]=000010
+# C[          1]=000018
+# C[          2]=000020
+# C[          3]=000028
+# C[          4]=000030
+# C[          5]=000038
+# C[          6]=000040
+# C[          7]=00003f
+# ** Note: $stop    : I:/ECE554/Minilab1/multiplication_tb.sv(83)
+#    Time: 345 ns  Iteration: 2  Instance: /multiplication_tb
+# Break in Module multiplication_tb at I:/ECE554/Minilab1/multiplication_tb.sv line 83

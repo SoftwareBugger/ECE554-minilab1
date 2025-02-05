@@ -1,0 +1,58 @@
+vsim -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/220model -vopt work.top_tb -voptargs=+acc
+# vsim -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/220model -vopt work.top_tb -voptargs="+acc" 
+# Start time: 17:10:41 on Feb 05,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "top(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "fifo_filler(fast)".
+# ** Warning: I:/ECE554/Minilab1/top_tb.sv(13): (vopt-2685) [TFMPC] - Too few port connections for 'minilab1'.  Expected 6, found 5.
+# ** Warning: I:/ECE554/Minilab1/top_tb.sv(13): (vopt-2718) [TFMPC] - Missing connection for port 'Clr'.
+# ** Note: (vopt-143) Recognized 1 FSM in module "memory(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.top(fast)
+# Loading work.fifo_filler(fast)
+# Loading work.memory(fast)
+# Loading work.rom(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.altsyncram(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.altsyncram_body(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.ALTERA_DEVICE_FAMILIES(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.ALTERA_MF_MEMORY_INITIALIZATION(fast)
+# Loading work.Multiplication(fast)
+# Loading work.Multi_single(fast)
+# Loading work.MAC(fast)
+# Loading work.FIFO(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (5) for port 'address'. The port definition is at: I:/ECE554/Minilab1/rom.v(41).
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/minilab1/filler/mem_access/memory File: I:/ECE554/Minilab1/memory.v Line: 25
+run -all
+# Starting Computations
+# Computations Finished, Beginning MAC Check
+# MAC           0 expected contents:0030c
+# MAC           0 contents:00030c
+# TEST           0 PASSED
+# MAC           1 expected contents:0054c
+# MAC           1 contents:00054c
+# TEST           1 PASSED
+# MAC           2 expected contents:0078c
+# MAC           2 contents:00078c
+# TEST           2 PASSED
+# MAC           3 expected contents:009cc
+# MAC           3 contents:0009cc
+# TEST           3 PASSED
+# MAC           4 expected contents:00c0c
+# MAC           4 contents:000c0c
+# TEST           4 PASSED
+# MAC           5 expected contents:00e4c
+# MAC           5 contents:000e4c
+# TEST           5 PASSED
+# MAC           6 expected contents:0108c
+# MAC           6 contents:00108c
+# TEST           6 PASSED
+# MAC           7 expected contents:012cc
+# MAC           7 contents:0012cc
+# TEST           7 PASSED
+# YAHOO: Values Calculated Correctly
+# ** Note: $stop    : I:/ECE554/Minilab1/top_tb.sv(64)
+#    Time: 3075 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at I:/ECE554/Minilab1/top_tb.sv line 64

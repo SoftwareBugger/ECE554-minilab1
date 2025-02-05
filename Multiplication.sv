@@ -1,24 +1,20 @@
 module Multiplication
-#(
-    parameter NUM_MAC = 8,
-    parameter WIDTH = 8
-)
 (
-    input [WIDTH-1:0] A [NUM_MAC-1:0],
-    input [WIDTH-1:0] B,
+    input [8-1:0] A [8-1:0],
+    input [8-1:0] B,
     input En,
     input Clr,
     input clk,
     input rst_n,
-    input [NUM_MAC:0] FIFO_empty,
+    input [8:0] FIFO_empty,
     output done,
-    output [NUM_MAC:0] FIFO_rden,
-    output [3*WIDTH-1:0] C [NUM_MAC-1:0]
+    output [8:0] FIFO_rden,
+    output [3*8-1:0] C [8-1:0]
 );
 
-logic [NUM_MAC-1:0] EN_inout;
-logic [WIDTH-1:0] B_inout [NUM_MAC-1:0];
-logic [NUM_MAC-2:0] EN_ff;
+logic [8-1:0] EN_inout;
+logic [8-1:0] B_inout [8-1:0];
+logic [8-2:0] EN_ff;
 logic En_ff, set_done, pre_done;
 always_ff @(posedge clk) begin
     if (rst_n == 0) begin
@@ -26,24 +22,25 @@ always_ff @(posedge clk) begin
         set_done <= 0;
     end
     else begin
-        EN_ff <= {EN_ff[NUM_MAC-2:0], En};
+        EN_ff <= {EN_ff[8-2:0], En};
         set_done <= pre_done;
     end
 end
 Multi_single 
 #(
-    .WIDTH(WIDTH)
-) multi_single [NUM_MAC-1:0]
+    .WIDTH(8)
+) multi_single [8-1:0]
 (
-    .B({B_inout[NUM_MAC-2:0], B}),
+    .B({B_inout[6], B_inout[5], B_inout[4], B_inout[3], B_inout[2], B_inout[1], B_inout[0], B}),
     .A(A),
-    .FIFO_empty(FIFO_empty[NUM_MAC:1]),
+    .FIFO_empty(FIFO_empty[8:1]),
     .rst_n(rst_n),
     .clk(clk),
-    .EN({EN_inout[NUM_MAC-2:0], |EN_ff}),
-    .EN_out(EN_inout[NUM_MAC-1:0]),
-    .FIFO_rd(FIFO_rden[NUM_MAC:1]),
-    .B_next(B_inout[NUM_MAC-1:0]),
+    .EN({EN_inout[8-2:0], |EN_ff}),
+	 .Clr(Clr),
+    .EN_out(EN_inout[8-1:0]),
+    .FIFO_rd(FIFO_rden[8:1]),
+    .B_next(B_inout[8-1:0]),
     .C(C)
 );
 assign FIFO_rden[0] = FIFO_rden[1];

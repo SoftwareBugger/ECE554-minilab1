@@ -39,6 +39,7 @@ initial begin
       end : timeout;
       begin
         @(posedge done)
+        repeat(2)@(posedge clk);
         disable timeout;
         @(posedge clk);
       end

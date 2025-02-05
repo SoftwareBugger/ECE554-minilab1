@@ -11,14 +11,13 @@ module fifo_filler
 );
 
 logic [63:0] readdata, shiftdata;
-logic read;
+logic read, sm_shift;
 logic datavalid, waitrequest;
 
 typedef enum reg[1:0]{IDLE, MEM_READ, PUSH_BYTE, EVALUATE}state_t;
 state_t state, nxt_state;
 
-mem_wrapper MEM(.clk(clk), .reset_n(rst_n), .address(address), .read(read), .readdata(readdata), .readdatavalid(datavalid), .waitrequest(waitrequest));
-
+memory mem_access(.clk(clk), .reset_n(rst_n), .address(address), .read(read), .readdata(readdata), .readdatavalid(datavalid), .waitrequest(waitrequest));
 
 always_ff@(posedge clk, negedge rst_n)begin
   if(!rst_n)
@@ -27,6 +26,14 @@ always_ff@(posedge clk, negedge rst_n)begin
     state <= nxt_state;
 end
 
+always_ff@(posedge clk, negedge rst_n)begin
+  if(!rst_n)
+    shiftdata <= 0;
+  else if(sm_shift)
+    shiftdata <= {8'h00, shiftdata[63:8]};
+  else if(datavalid)
+    shiftdata <= readdata;
+end
 
 
 always_comb begin
@@ -35,11 +42,11 @@ always_comb begin
   done = 0;
   data_o = 0;
   read = 0;
-  
+  sm_shift = 0;
   case(state)
 	PUSH_BYTE:begin
             data_o = shiftdata[7:0];
-            shiftdata = {8'h00, shiftdata[63:8]};
+            sm_shift = 1'b1;
 	    wren = 1'b1;
 	    nxt_state = EVALUATE;
 	end
@@ -55,7 +62,6 @@ always_comb begin
 
 	MEM_READ:begin
 		if(datavalid)begin
-			shiftdata = readdata;
 			nxt_state = PUSH_BYTE;
 		end
 		read = 1'b1;
