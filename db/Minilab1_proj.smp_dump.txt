@@ -1,0 +1,13 @@
+
+State Machine - |Minilab1_proj|fifo_filler:filler|state
+Name state.EVALUATE state.PUSH_BYTE state.MEM_READ state.IDLE 
+state.IDLE 0 0 0 0 
+state.MEM_READ 0 0 1 1 
+state.PUSH_BYTE 0 1 0 1 
+state.EVALUATE 1 0 0 1 
+
+State Machine - |Minilab1_proj|fifo_filler:filler|memory:mem_access|state
+Name state.IDLE state.RESPOND state.WAIT 
+state.IDLE 0 0 0 
+state.WAIT 1 0 1 
+state.RESPOND 1 1 0 
