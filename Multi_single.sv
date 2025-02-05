@@ -40,7 +40,7 @@ module Multi_single
                 EN_ff <= EN;
                 EN_dff <= EN_ff;
             end
-            if (EN) begin
+            if (EN | EN_ff) begin
                 EN_MAC <= 1;
             end
             else begin

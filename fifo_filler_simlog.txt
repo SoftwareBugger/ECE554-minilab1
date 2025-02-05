@@ -1,0 +1,37 @@
+vsim -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/220model -vopt -voptargs=+acc work.fifo_filler_tb
+# End time: 17:12:18 on Feb 05,2025, Elapsed time: 0:01:37
+# Errors: 0, Warnings: 5
+# vsim -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf -L C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/220model -vopt -voptargs="+acc" work.fifo_filler_tb 
+# Start time: 17:12:18 on Feb 05,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "fifo_filler(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "memory(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.fifo_filler_tb(fast)
+# Loading work.FIFO(fast)
+# Loading work.fifo_filler(fast)
+# Loading work.memory(fast)
+# Loading work.rom(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.altsyncram(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.altsyncram_body(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.ALTERA_DEVICE_FAMILIES(fast)
+# Loading C:/intelFPGA_lite/23.1std/questa_fse/intel/verilog/altera_mf.ALTERA_MF_MEMORY_INITIALIZATION(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (5) for port 'address'. The port definition is at: I:/ECE554/Minilab1/rom.v(41).
+#    Time: 0 ps  Iteration: 0  Instance: /fifo_filler_tb/filler/mem_access/memory File: I:/ECE554/Minilab1/memory.v Line: 25
+run -all
+# Starting FIFO Filling
+# Done Filling FIFOs, Beginning Contents Check
+# FIFO           0 contents:0102030405060708
+# FIFO           1 contents:1112131415161718
+# FIFO           2 contents:2122232425262728
+# FIFO           3 contents:3132333435363738
+# FIFO           4 contents:4142434445464748
+# FIFO           5 contents:5152535455565758
+# FIFO           6 contents:6162636465666768
+# FIFO           7 contents:7172737475767778
+# FIFO           8 contents:8182838485868788
+# ** Note: $stop    : I:/ECE554/Minilab1/fifo_filler_tb.sv(120)
+#    Time: 3625 ns  Iteration: 1  Instance: /fifo_filler_tb
+# Break in Module fifo_filler_tb at I:/ECE554/Minilab1/fifo_filler_tb.sv line 120

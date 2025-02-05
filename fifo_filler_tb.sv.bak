@@ -111,7 +111,7 @@ initial begin
 
     //get FIFO content
     rden = 1'b1;
-    repeat(9)@(posedge clk)
+    repeat(8)@(posedge clk)
       fifo_data = {fifo_byte, fifo_data[63:8]};
     rden = 1'b0;
 
